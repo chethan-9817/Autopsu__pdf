@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", "Consolas", monospace;
+  /* Light, neutral surfaces. One dark accent (slate-900) for actions; red/green only for money. */
+  --color-canvas: #f6f7f9;
+  --color-line: #e4e7ec;
+  --color-pay: #059669;
+  --color-loss: #dc2626;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-canvas);
+  color: #0f172a;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tabular figures only where numbers change, so hyphens and text keep normal spacing */
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: rgb(15 23 42 / 0.12);
+}
+
+/* Quiet scrollbars for the two panes */
+.pane-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+  scroll-behavior: smooth;
+}
+.pane-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.pane-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 8px;
+}
+
+/* Range sliders */
+input[type="range"].slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #0f172a 0%, #0f172a var(--fill, 50%), #e2e8f0 var(--fill, 50%));
+  outline: none;
+  cursor: pointer;
+}
+input[type="range"].slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 1px 3px rgb(15 23 42 / 0.2);
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+input[type="range"].slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+input[type="range"].slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 1px 3px rgb(15 23 42 / 0.2);
+}
+input[type="range"].slider:focus-visible::-webkit-slider-thumb {
+  box-shadow:
+    0 1px 3px rgb(15 23 42 / 0.2),
+    0 0 0 4px rgb(15 23 42 / 0.12);
+}
+
+/* Evidence highlight on the PDF: a soft highlighter that breathes twice, then rests */
+@keyframes evidence-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 rgb(245 158 11 / 0.45),
+      inset 0 0 0 2px rgb(217 119 6 / 0.9);
+  }
+  50% {
+    box-shadow:
+      0 0 0 8px rgb(245 158 11 / 0),
+      inset 0 0 0 2px rgb(217 119 6 / 1);
+  }
+}
+.evidence-box {
+  animation: evidence-pulse 1.8s ease-in-out 2;
+  box-shadow: inset 0 0 0 2px rgb(217 119 6 / 0.9);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .evidence-box {
+    animation: none;
+  }
+  .pane-scroll {
+    scroll-behavior: auto;
+  }
+}
